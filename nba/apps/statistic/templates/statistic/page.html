@@ -1,0 +1,38 @@
+{% extends 'nba/base.html' %}
+{% block title %}
+    <title>Big Basketball Homepage</title>
+{% endblock title %}
+
+{% block content %}
+{% for message in messages %}
+    <div  class="alert alert-warning"><div class="alert-heading">{{ message }}</div></div><br>
+{% endfor %}
+
+<div class="h3 text-center">A place of NBA statistic</div>
+<br><br><hr>
+
+<div class="d-flex align-items-stretch">
+  <div class="p-3 bd-highlight w-50"><div class="h5"> EASTERN CONFERENCE:</div>
+      <hr>
+      {% for team in teams %}
+        {% if team.conference.name|lower == 'eastern'%}
+                <p class="text-md-left m-2">
+                    <a href="{% url 'statistic:team' team.id %}"> {{ team }}</a>
+                </p>
+        {% endif %}
+      {% endfor %}
+  </div>
+    <div class="p-3 bd-highlight w-50"><div class="h5"> WESTERN CONFERENCE:</div>
+      <hr>
+      {% for team in teams %}
+        {% if team.conference.name|lower == 'western'%}
+            <p class="text-md-left m-2">
+                <a href="{% url 'statistic:team' team.id %}"> {{ team }}</a>
+            </p>
+        {% endif %}
+      {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
+

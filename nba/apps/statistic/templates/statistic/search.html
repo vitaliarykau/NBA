@@ -1,0 +1,28 @@
+{% extends 'nba/base.html' %}
+{% block title %}
+    <title>Big Basketball Homepage</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+
+<div class="h5 text-left">Results of searching...</div>
+
+
+
+  <div class="p-1 bd-highlight">
+      <hr>
+      {% for player in players %}
+      <a class="text-sm" href="{% url 'statistic:player_bio' player.id %}">{{ player }}</a>
+      {% endfor %}
+      {% for team in teams_found %}
+      <a class="text-sm" href="{% url 'statistic:team' team.id %}">{{ team }}</a>
+      {% endfor %}
+  </div>
+
+{% if not players and not teams_found %}
+<div class="h5"> No match found... </div>{% endif %}
+
+
+{% endblock content %}
+

@@ -1,0 +1,19 @@
+{% extends 'nba/base.html' %}
+{% block content %}
+<form method="post" action="{% url 'statistic:delete_match' match.id %}">{% csrf_token %}
+    <div  class="alert alert-danger">
+        <h4 class="alert-heading">Are you sure you want to delete next match?</h4><br>
+        <p><strong>{{ object.date|date:'d M Y' }} {{ object.team1 }}
+            {{ object.score1 }}:{{ object.score2}}   {{ object.team2}}</strong></p>
+    </div>
+
+    <input class="btn btn-outline-primary m-1" type="submit" style="width: 150px;"  value="Confirm" >
+    <a href="{% url 'statistic:matches' %}">
+        <input class="btn btn-outline-primary m-1" type="button" style="width: 150px;"  value="Back">
+   </a>
+</form>
+
+
+{% endblock content %}
+
+

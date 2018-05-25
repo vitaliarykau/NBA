@@ -1,0 +1,82 @@
+{% extends 'nba/base.html' %}
+
+{% block title %}
+    <title>Bio of {{ player }}</title>
+{% endblock title %}
+{% block content %}
+
+    <div class="d-flex ">
+      <div class="p-2 bd-highlight">
+          {% if player.image %}
+            <img src="{{ player.image.url }}" alt="{{ player }}" width="275px" height="220px">
+          {% endif %}
+      </div>
+      <div class="p-3 bd-highlight">
+        <div class="text-sm"><b> Name</b>: {{ player.name }}</div>
+        <div class="text-sm"><b>Surname</b>: {{ player.surname }}</div>
+        <div class="text-sm"><b> Team</b>:
+            <a href="{% url 'statistic:team' player.team.id %}">{{ player.team }}</a></div>
+        <div class="text-sm"><b> Position</b>: {{ player.position }} </div>
+        <div class="text-sm"><b> Number</b>: {{ player.number }} </div>
+        <div class="text-sm"><b> Birthday</b>: {{ player.b_day }} </div>
+        <div class="text-sm"><b> Height</b>: {{ player.height }} cm </div>
+        {% if player.weight %}
+            <div class="text-sm"><b> Weight</b>: {{ player.weight }} kg </div>
+        {% endif %}
+        {% if player.college %}
+              <div class="text-sm"><b> College</b>: {{ player.college }} </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <hr>
+
+{% if perms.statistic.can_moderate %}
+    <a class="btn btn-outline-primary m-1" href="{% url 'statistic:add_stat' %}"role="button">Add statistic</a>
+{% endif %}
+
+{% if stats %}
+    <p class="h4">Statistics:</p>
+     <table class="table mx-left" style="width: 700px; font-size: 14px">
+      <thead>
+        <tr>
+          <th scope="col-sm"><div class="text-sm-right">Season</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Team</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Time</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Points</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Rebounds</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Assists</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Steals</div></th>
+          <th scope="col-sm"><div class="text-sm-left">Blocks</div></th>
+        </tr>
+      </thead>
+         {% for stat in stats %}
+      <tbody>
+          <td class="text-right">{{ stat.season }}</td>
+          <td class="text-left">{{ stat.team.short_name|upper }}</td>
+          <td class="text-left">{{ stat.time|date:"i:s"}} </td>
+          <td class="text-left">{{ stat.points }}</td>
+          <td class="text-left">{{ stat.rebounds }}</td>
+          <td class="text-left">{{ stat.assists }}</td>
+          <td class="text-left">{{ stat.steals }}</td>
+          <td class="text-left">{{ stat.blocks }}</td>
+
+      </tbody>
+    {% endfor %}
+    </table>
+{% if player.description %}
+<hr>
+<div class="h4">Player's bio:</div>
+<div class="text-sm">{{ player.description }}</div>
+{% endif %}
+
+
+{% endif %}
+
+
+{% endblock content %}
+
+
+
+
+

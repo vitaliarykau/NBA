@@ -1,0 +1,30 @@
+{% extends 'nba/base.html' %}
+
+{% block title %}
+    <title>Big Basketball</title>
+{% endblock title %}
+{% block content %}
+
+<div class="col-md-4">
+<form action="{% url 'statistic:add_stat' %}" method="post">{% csrf_token %}
+<div class="form-group" >
+    {% for field in form %}
+
+    <font size="3" face="Times New Roman" color="red" >{{ field.errors }}</font>
+
+    <label class="col-sm-12 col-form-label" > {{ field.label_tag }}</label>
+    {{ field }}
+    {% endfor %}
+    <br>
+    <input class="btn btn-outline-primary m-1" type="submit" style="width: 150px;"  value="Submit">
+    <input class="btn btn-outline-primary m-1" type="reset" style="width: 150px;"  value="Reset">
+
+</div>
+</form>
+    </div>
+
+
+{% endblock content %}
+
+
+

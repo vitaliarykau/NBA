@@ -1,0 +1,29 @@
+{% extends 'nba/base.html' %}
+{% block content %}
+{% for message in messages %}
+    <font size="5" face="Times New Roman" color="red" >{{ message }}</font>
+{% endfor %}
+
+<h2><b><font color="blue">Edit a match</font></b></h2>
+
+<div class="col-md-4">
+<form action="{% url 'statistic:edit_match' match.id %}" method="post">{% csrf_token %}
+<div class="form-group">
+    {% for field in form %}
+    <label class="col-sm-6 col-form-label"> {{ field.label_tag }}</label>
+    {{ field }}
+    {% endfor %}
+    <br>
+    <input class="btn btn-outline-primary m-1" type="submit" style="width: 150px;"  value="Submit">
+    <input class="btn btn-outline-primary m-1" type="reset" style="width: 150px;"  value="Reset">
+
+
+</div>
+</form>
+    </div>
+
+
+
+{% endblock content %}
+
+

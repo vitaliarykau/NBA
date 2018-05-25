@@ -1,0 +1,17 @@
+{% extends 'nba/base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Big Basketball</title>
+</head>
+<body>
+<h4>All players of NBA:</h4>
+<ul>
+    {% for player in players %}
+    <li><a href="{% url 'statistic:player_bio' player.id %}"> {{player}} </a></li>
+    {% endfor %}
+</ul>
+</body>
+{% endblock content %}
+
+

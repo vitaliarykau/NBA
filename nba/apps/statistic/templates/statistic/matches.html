@@ -1,0 +1,56 @@
+{% extends 'nba/base.html' %}
+{% load static %}
+{% block title %}
+    <title>Matches</title>
+{% endblock title %}
+
+{% block content %}
+
+{% for message in messages %}
+    <font size="5" face="Times New Roman" color="red" >{{ message }}</font>
+{% endfor %}
+<br><br>
+
+{% if perms.statistic.can_moderate %}
+    <a class="btn btn-outline-primary m-1" href="{% url 'statistic:new_match' %}"role="button">Add new match</a>
+{% endif %}
+<table class="table mx-auto" style="width: 700px;">
+  <thead>
+    <tr>
+      <th scope="col-sm">Date</th>
+      <th scope="col-sm">Time</th>
+      <th scope="col-sm"><div class="text-sm-right">Home</div></th>
+      <th scope="col-sm"><div class="text-sm-center">Score</div></th>
+      <th scope="col-sm"><div class="text-sm-left">Visitor</div></th>
+      {% if perms.statistic.can_moderate %}
+          <th scope="col-sm"><div class="text-sm-center"></div></th>
+          <th scope="col-sm"><div class="text-sm-left"></div></th>
+      {% endif %}
+
+    </tr>
+  </thead>
+{% for match in matches %}
+  <tbody>
+      <th scope="row ">{{ match.date|date:'d:m:y' }}</th>
+      <td scope="text-left ">{{ match.time|date:'G:i' }}</td>
+      <td class="text-right">{{ match.team1 }}</td>
+      <td class="text-center"><a href="{% url 'statistic:match' match.pk %}">{{ match.score1 }} : {{ match.score2 }}</a></td>
+      <td class="text-left">{{ match.team2 }}</td>
+      {% if perms.statistic.can_moderate %}
+        <td>
+            <a href="{% url 'statistic:edit_match' match.id %}">
+                <img src="{% static "image/moderate-match.png" %}" alt="Edit" height="17px" width="17px">
+                </a>
+        </td>
+        <td>
+            <a href="{% url 'statistic:delete_match' match.id %}">
+                <img src="{% static "image/delete.png" %}" alt="Delete" height="17px" width="17px">
+            </a>
+        </td>
+
+  </tbody>
+        {% endif %}
+{% endfor %}
+</table>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'nba/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <br>
+     <blockquote class="text-center alert alert-success">
+         <div class="h5">You have already joined</div>
+{% else %}
+ {% if form.errors %}
+    <div  class="alert alert-danger">
+        <h5 class="alert-heading">Incorrect login/password. Try it again...</h5>
+    </div>
+    <hr>
+    {% endif %}
+
+<br><br>
+<div class="container">
+
+<form action="{% url 'users:login' %}" method="post">{% csrf_token %}
+  <div class="form-group">
+    <label for="tag_username">Your username</label>
+    <input type="text" class="form-control" id="tag_username" placeholder="Enter username" name="username">
+    <small class="form-text text-muted">Enter your username here</small>
+  </div>
+  <div class="form-group">
+    <label for="tag_password">Password</label>
+    <input type="password" name="password" class="form-control" id="tag_password" placeholder="Password">
+  </div>
+    <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+{% endif %}
+{% endblock content %}
+

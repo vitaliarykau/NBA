@@ -1,0 +1,68 @@
+{% extends 'nba/base.html' %}
+{% block title %}
+    <title>Big Basketball</title>
+{% endblock title %}
+
+{% block leftbar%}
+{% endblock leftbar%}
+{% block content %}
+
+<p class="text-center font-weight-bold h3"> {{ team.city }} {{ team.name }} </p>
+<hr>
+
+<div class="row">
+      <div class="col">
+        {% if team.logo %}
+            <img src="{{ team.logo.url }}" alt="{{ team }}"
+                 class="rounded mx-auto d-block" width="300px" height="300px">
+        {% endif %}
+      </div>
+      <div class="col">
+        <div><span class="text-left font-weight-bold h5 p-1"> City: </span>
+            <span class="text-left"> {{ team.city }}</span></div>
+        <div><span class="text-left font-weight-bold h5 p-1"> Name: </span>
+            <span class="text-left"> {{ team.name }}</span></div>
+        <div><span class="text-left font-weight-bold h5 p-1"> Conference: </span>
+            <span class="text-left"> {{ team.conference }}</span></div>
+        <div><span class="text-left font-weight-bold h5 p-1"> Coach: </span>
+            <span class="text-left"> {{ team.coach }}</span></div>
+      </div>
+      <div class="col">
+        <p class="text-left font-weight-bold h5 p-1"> Team squad: </p>
+        {% for player in roster %}
+            <ul style="height: 7px;"><a href="{% url 'statistic:player_bio' player.id %}">
+                #{{ player.number }}: {{player}}</a></ul>
+        {% endfor %}
+      </div>
+    </div>
+
+<hr>
+
+
+<table class="table mx-auto" style="width: 700px;">
+  <thead>
+    <tr>
+      <th scope="col-sm">Date</th>
+      <th scope="col-sm">Time</th>
+      <th scope="col-sm"><div class="text-sm-right">Home</div></th>
+      <th scope="col-sm"><div class="text-sm-center">Score</div></th>
+      <th scope="col-sm"><div class="text-sm-left">Visitor</div></th>
+    </tr>
+  </thead>
+{% for match in matches %}
+  <tbody>
+      <th scope="row ">{{ match.date|date:'d:m:y' }}</th>
+      <td scope="text-left ">{{ match.time|date:'G:i' }}</td>
+      <td class="text-right">{{ match.team1 }}</td>
+      <td class="text-center"><a href="{% url 'statistic:match' match.pk %}">{{ match.score1 }} : {{ match.score2 }}</a></td>
+      <td class="text-left">{{ match.team2 }}</td>
+      {% if perms.statistic.can_moderate %}
+
+
+  </tbody>
+        {% endif %}
+{% endfor %}
+</table>
+
+
+{% endblock content %}

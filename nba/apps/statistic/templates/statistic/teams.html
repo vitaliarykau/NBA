@@ -1,0 +1,14 @@
+{% extends 'nba/base.html' %}
+{% block content %}
+
+<body>
+<h4>Teams by conference:</h4>
+<ul>
+    {% for team in teams %}
+    <li><a href="{% url 'statistic:team' team.id %}"> {{team}} </a> </li>
+    {% endfor %}
+</ul>
+</body>
+{% endblock content %}
+
+

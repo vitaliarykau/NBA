@@ -1,0 +1,79 @@
+{% extends 'nba/base.html' %}
+{% load static %}
+{% block title %}
+    <title>{{ match }}</title>
+{% endblock title %}
+
+
+{% block content %}
+
+<br>
+<div class="h4 text-center" style="width:1000px;"><strong>{{ object.date|date:'d M Y' }} {{ object.team1 }}
+            {{ object.score1 }}:{{ object.score2}}   {{ object.team2}}</strong></div>
+<br>
+<div class="row mx-auto" style="width: 800px;">
+      <div class="col">
+      <div><span class="text-left font-weight-bold h6 p-1"> Date: </span>
+            <span class="text-left">{{ match.date }}</span></div>
+      </div>
+    <div class="col">
+      <div><span class="text-center font-weight-bold h6 p-1"> Time: </span>
+            <span class="text-center">{{ match.time }}</span></div>
+      </div>
+    <div class="col">
+      <div><span class="text-right font-weight-bold h6 p-1"> Venue: </span>
+            <span class="text-right">{{ match.arena }}</span></div>
+      </div>
+</div>
+<br>
+<div class="h6 mx-auto text-left" style="width: 800px;">
+    <span class="text-left font-weight-bold h6 p-3">Winner:</span> {% if match.score1 > match.score2 %}
+    <img src="{{ match.team1.logo.url }}" alt="{{ match.team1 }}" width="55px" height="50px">
+    <a href="{% url 'statistic:team' match.team1.id %}">{{ match.team1 }}</a>
+    {% else %}<a href="{% url 'statistic:team' match.team2.id %}"> {{ match.team2 }}</a>
+        <img src="{{ match.team2.logo.url }}" alt="{{ match.team2 }}" width="55px" height="50px">
+
+{% endif %}
+</div>
+<br>
+<div class="row mx-auto" style="width: 700px;">
+      <div class="col">
+      <div><span class="text-left font-weight-bold h6 p-1"> Host: </span>
+            <a class="text-left" href="{% url 'statistic:team' match.team1.pk %}">{{ match.team1 }}</a></div>
+      </div>
+    <div class="col">
+        <span class="text-left font-weight-bold h6 p-1"> Guest: </span>
+            <a class="text-left" href="{% url 'statistic:team' match.team2.pk %}"> {{ match.team2 }}</a></div>
+</div>
+<div class="row mx-auto" style="width: 700px;">
+      <div class="col">
+      <div><span class="text-left font-weight-bold h6 p-1"> Points: </span>
+            <span class="text-left"> {{ match.score1 }}</span></div>
+      </div>
+    <div class="col">
+        <span class="text-left font-weight-bold h6 p-1"> Points: </span>
+            <span class="text-left"> {{ match.score2 }}</span></div>
+</div>
+<div class="row mx-auto" style="width: 700px;">
+      <div class="col">
+      <div class="text-left font-weight-bold h6 p-1"> Squad:</div>
+          {% for player in roster1 %}
+            <div class="text-sm-left ml-3" style="font-size: 13px;">
+                <a href="{% url 'statistic:player_bio' player.id %}"> {{ player }}</a></div>
+          {% endfor %}
+      </div>
+     <div class="col">
+      <div class="text-left font-weight-bold h6 p-1"> Squad:</div>
+          {% for player in roster2 %}
+            <div class="text-sm-left ml-3" style="font-size: 13px;">
+                <a href="{% url 'statistic:player_bio' player.id %}"> {{ player }}</a></div>
+          {% endfor %}
+      </div>
+</div>
+
+
+
+{% endblock content %}
+
+
+
